@@ -26,9 +26,9 @@
 const { shopMenu, shopPage } = require("../pageObjects/shopPage");
 const loginPage = require("../pageObjects/loginPage");
 const signUpPage = require("../pageObjects/signUpPage");
-const accountCreated = require("../pageObjects/accountCreated");
+const accountCreatedPage = require("../pageObjects/accountCreatedPage");
 const User = require("../utils/User");
-const accountDeleted = require("../pageObjects/accountDeleted");
+const accountDeletedPage = require("../pageObjects/accountDeletedPage");
 const userInstance = new User();
 const user = userInstance.generateUser();
 
@@ -85,10 +85,10 @@ Cypress.Commands.add("enterAccountInformation", () => {
 
 Cypress.Commands.add("clickCreateAccount", () => {
   cy.get(signUpPage.createAccount).click();
-  cy.get(accountCreated.title)
+  cy.get(accountCreatedPage.title)
     .should("be.visible")
     .should("include.text", "Account Created!");
-  cy.get(accountCreated.continue).click();
+  cy.get(accountCreatedPage.continue).click();
 });
 
 Cypress.Commands.add("createAccount", () => {
@@ -106,10 +106,10 @@ Cypress.Commands.add("verifyUserIsLogged", () => {
 
 Cypress.Commands.add("deleteAccount", () => {
   cy.get(shopMenu.delete).should("be.visible").click();
-  cy.get(accountDeleted.title)
+  cy.get(accountDeletedPage.title)
     .should("be.visible")
     .should("include.text", "Account Deleted!");
-  cy.get(accountDeleted.continue).click();
+  cy.get(accountDeletedPage.continue).click();
 });
 
 Cypress.Commands.add("createAccountApi", () => {
