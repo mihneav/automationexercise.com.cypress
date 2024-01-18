@@ -1,0 +1,25 @@
+const signUpPage = {
+  enterAccountInformation: ":nth-child(1) > b",
+  title: `.radio-inline`,
+  name: `[data-qa="name"]`,
+  email: `[data-qa="email"]`,
+  password: `[data-qa="password"]`,
+  dayOfBirth: `[data-qa="days"]`,
+  monthOfBirth: `[data-qa="months"]`,
+  yearOfBirth: `[data-qa="years"]`,
+  newsletter: `#newsletter`,
+  offers: `#optin`,
+  firstName: `[data-qa="first_name"]`,
+  lastName: `[data-qa="last_name"]`,
+  company: `[data-qa="company"]`,
+  address: `[data-qa="address"]`,
+  address2: `[data-qa="address2"]`,
+  country: `[data-qa="country"]`,
+  state: `[data-qa="state"]`,
+  city: `[data-qa="city"]`,
+  zipCode: `[data-qa="zipcode"]`,
+  mobileNumber: `[data-qa="mobile_number"]`,
+  createAccount: `[data-qa="create-account"]`,
+};
+
+module.exports = signUpPage;
