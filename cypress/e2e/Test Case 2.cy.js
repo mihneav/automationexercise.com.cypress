@@ -12,6 +12,7 @@ describe("Test Case 2: Login User with correct email and password", () => {
   8. Verify that 'Logged in as username' is visible
   9. Click 'Delete Account' button
   10. Verify that 'ACCOUNT DELETED!' is visible`, () => {
+    cy.visit("");
     cy.verifyHompageIsVisible();
     cy.login();
     cy.verifyUserIsLogged();

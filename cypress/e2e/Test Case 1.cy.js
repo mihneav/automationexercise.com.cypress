@@ -17,7 +17,7 @@ describe("Test Case 1: Register User", () => {
   16. Verify that 'Logged in as username' is visible
   17. Click 'Delete Account' button
   18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button`, () => {
-    //Navigate to url 'http://automationexercise.com'
+    cy.visit("");
     cy.verifyHompageIsVisible();
     cy.initiateSignUp();
     cy.enterAccountInformation();

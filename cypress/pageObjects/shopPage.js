@@ -4,9 +4,10 @@ const shopMenu = {
   cart: ".shop-menu > .nav > :nth-child(3)",
   signUpLogin: ".shop-menu > .nav > :nth-child(4)",
   contactUs: ".shop-menu > .nav > :nth-child(8)",
-  loggedInAsUsername: ":nth-child(10) > a",
+  loggedInAsUsername: ":nth-child(10)",
   delete: ".shop-menu > .nav > :nth-child(5)",
-  logout: ".shop-menu > .nav > :nth-child(4) > a",
+  logout: ".shop-menu > .nav > :nth-child(4)",
+  testCases: ".shop-menu > .nav > :nth-child(5) ",
 };
 
 const shopPage = {

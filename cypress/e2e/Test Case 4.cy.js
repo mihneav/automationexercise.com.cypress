@@ -1,4 +1,4 @@
-describe("Test Case 2: Login User with correct email and password", () => {
+describe("Test Case 4: Logout User", () => {
   before(() => {
     cy.createAccountApi();
   });
@@ -12,6 +12,7 @@ describe("Test Case 2: Login User with correct email and password", () => {
   8. Verify that 'Logged in as username' is visible
   9. Click 'Logout' button
   10. Verify that user is navigated to login page`, () => {
+    cy.visit("");
     cy.verifyHompageIsVisible();
     cy.login();
     cy.verifyUserIsLogged();
