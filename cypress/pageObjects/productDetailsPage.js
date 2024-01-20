@@ -9,8 +9,8 @@ const productDetailsPage = {
   addToCart: ".product-information > > .btn",
   reviewName: `#name`,
   reviewEmail: `#email`,
-  reviewMessage: `#message`,
+  reviewMessage: `#review`,
   reviewButton: `#button-review`,
 };
 
-module.exports = productsPage;
+module.exports = productDetailsPage;

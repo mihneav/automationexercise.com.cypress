@@ -5,6 +5,7 @@ const contactUsPage = {
   message: `[data-qa="message"]`,
   fileSubmit: `:nth-child(6) > .form-control`,
   submitButton: `[data-qa="submit-button"]`,
+  succeesMessage: ".status",
 };
 
 module.exports = contactUsPage;

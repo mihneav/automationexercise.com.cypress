@@ -1,4 +1,4 @@
-describe("Test Case 6: Contact Us Form", () => {
+describe("Test Case 8: Verify All Products and product detail page", () => {
   it(`1. Launch browser
   2. Navigate to url 'http://automationexercise.com'
   3. Verify that home page is visible successfully
@@ -9,8 +9,8 @@ describe("Test Case 6: Contact Us Form", () => {
   8. User is landed to product detail page
   9. Verify that detail detail is visible: product name, category, price, availability, condition, brand`, () => {
     cy.visit("");
-    // cy.verifyHompageIsVisible();
-    // cy.verifyAllProductsPage();
-    cy.searchProductApi();
+    cy.verifyHompageIsVisible();
+    cy.verifyAllProductsPage();
+    cy.verifyProductDetailsPage(0);
   });
 });
