@@ -2,6 +2,7 @@ const { shopMenu, shopPage } = require("../pageObjects/shopPage");
 const contactUsPage = require("../pageObjects/contactUsPage");
 const bacon = require("../utils/bacon");
 const testCasesPage = require("../pageObjects/testCasesPage");
+import { subscribeOn } from "rxjs";
 import user from "./userCommands";
 
 Cypress.Commands.add("verifyHompageIsVisible", () => {
@@ -31,4 +32,14 @@ Cypress.Commands.add("verifyTestCasesPage", () => {
     .click();
   cy.get(testCasesPage.tableRows).should("have.length.least", 26);
   cy.get(shopPage.footer).should("be.visible");
+});
+
+Cypress.Commands.add("verifySubscription", () => {
+  cy.get(shopPage.subscriptionText).should("be.visible");
+  cy.get(shopPage.subscribeEmail).type(user.email);
+  cy.get(shopPage.subscribeButton).click();
+  cy.get(shopPage.subscribeMessage).should(
+    "have.text",
+    "You have been successfully subscribed!"
+  );
 });

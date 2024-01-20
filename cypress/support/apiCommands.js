@@ -38,9 +38,9 @@ Cypress.Commands.add("deleteAccountApi", () => {
   });
 });
 
-Cypress.Commands.add("searchProductApi", () => {
+Cypress.Commands.add("searchProductApi", (productName) => {
   const payload = {
-    search_product: "blue top",
+    search_product: productName,
   };
   cy.request({
     method: "POST",
@@ -53,7 +53,6 @@ Cypress.Commands.add("searchProductApi", () => {
   }).then((response) => {
     expect(response.status).to.equal(200);
     response.body = JSON.parse(response.body);
-    // expect(response.body).to.have.property("responseCode", 200);
-    // expect(response.body).to.have.property("message", "Account deleted!");
+    cy.wrap(response.body).as("responseBody");
   });
 });

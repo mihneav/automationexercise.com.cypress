@@ -13,6 +13,10 @@ const shopMenu = {
 const shopPage = {
   footer: "#footer",
   featuredItems: ".features_items",
+  subscriptionText: ".single-widget > h2",
+  subscribeEmail: "#susbscribe_email",
+  subscribeButton: "#subscribe",
+  subscribeMessage: ".alert-success",
 };
 
 module.exports = { shopMenu, shopPage };

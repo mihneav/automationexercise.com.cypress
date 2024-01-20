@@ -13,4 +13,9 @@ const productDetailsPage = {
   reviewButton: `#button-review`,
 };
 
-module.exports = productDetailsPage;
+const cartModal = {
+  viewCart: "u",
+  continueShopping: ".modal-footer > .btn",
+};
+
+module.exports = { productDetailsPage, cartModal };

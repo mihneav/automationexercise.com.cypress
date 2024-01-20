@@ -1,6 +1,7 @@
 const productsPage = {
   search: "#search_product",
   submitSearch: "#submit_search",
+  title: ".title",
   productCards: `.features_items > .col-sm-4`,
   productCard: function (index) {
     const selector = `${this.productCards}:nth(${index})`;
