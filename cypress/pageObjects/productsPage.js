@@ -9,6 +9,10 @@ const productsPage = {
       selector: selector,
       viewProduct: `${selector} .nav`,
       name: `${selector} p:first`,
+      productInfo: `${selector} .productinfo`,
+      overlayPrice: `${selector} > h2`,
+      overlayName: `${selector} > p`,
+      overlayAddToCart: `${selector} .product-overlay .btn.btn-default.add-to-cart`,
     };
   },
 };

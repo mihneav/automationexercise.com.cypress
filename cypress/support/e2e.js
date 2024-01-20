@@ -18,5 +18,6 @@ import "./commands";
 import "./apiCommands";
 import "./userCommands";
 import "./productCommands";
+import "./cartCommands";
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

@@ -1,4 +1,4 @@
-describe("Test Case 11: Verify Subscription in Cart page", () => {
+describe("Test Case 12: Add Products in Cart", () => {
   it(`1. Launch browser
   2. Navigate to url 'http://automationexercise.com'
   3. Verify that home page is visible successfully
@@ -10,7 +10,8 @@ describe("Test Case 11: Verify Subscription in Cart page", () => {
   9. Verify both products are added to Cart
   10. Verify their prices, quantity and total price`, function () {
     cy.visit("/");
-    cy.addRandomProductsInCart(2);
-    // cy.addRandomProductInCart();
+    cy.addProductInCart(0);
+    cy.addProductInCart(1, true);
+    cy.verifyCartProducts();
   });
 });

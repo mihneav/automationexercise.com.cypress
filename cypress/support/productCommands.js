@@ -5,6 +5,7 @@ const {
   cartModal,
 } = require("../pageObjects/productDetailsPage");
 let cartArray = [];
+import "cypress-real-events/support";
 
 Cypress.Commands.add("verifyAllProductsPage", () => {
   cy.get(shopMenu.products)
@@ -45,36 +46,61 @@ Cypress.Commands.add("searchforRandomProduct", function () {
     });
 });
 
-Cypress.Commands.add("addRandomProductsInCart", (products) => {
-  for (let i = 1; i <= products; i++) {
-    cy.addRandomProductInCart();
-  }
-});
-
-Cypress.Commands.add("addRandomProductInCart", function (quantity = 1) {
-  cy.searchforRandomProduct();
-  cy.verifyProductDetailsPage();
-  cy.get(productDetailsPage.quantity).clear().type(quantity);
-  cy.get(productDetailsPage.addToCart).click();
-  cy.get(productDetailsPage.name)
-    .invoke("text")
-    .then((productName) => {
-      cy.searchProductApi(productName);
-      cy.get("@responseBody").then((response) => {
-        let product = response.products[0];
-        product.quantity = quantity;
-        product.price = product.price.trim().replace(/^Rs\. /, ""); //trim currency
-        //in case random product is duplicate
-        const existingProduct = cartArray.find(
-          (item) => item.id === product.id
-        );
-        if (existingProduct) {
-          existingProduct.quantity += quantity;
-        } else {
-          cartArray.push({ ...product, quantity: 1 });
-        }
+Cypress.Commands.add(
+  "addProductInCart",
+  function (productIndex, viewCart = false) {
+    cy.get(productsPage.productCard(productIndex).productInfo).realHover();
+    cy.get(productsPage.productCard(productIndex).overlayAddToCart).click();
+    cy.get(productsPage.productCard(productIndex).name)
+      .invoke("text")
+      .then((productName) => {
+        cy.searchProductApi(productName);
+        cy.get("@responseBody").then((response) => {
+          let product = response.products[0];
+          updateCartArray(product, 1);
+        });
       });
-    });
-  cy.get(cartModal.continueShopping).click();
-  cy.log(cartArray);
-});
+    viewCart
+      ? cy.get(cartModal.viewCart).click()
+      : cy.get(cartModal.continueShopping).click();
+
+    cy.log(cartArray);
+  }
+);
+
+Cypress.Commands.add(
+  "addRandomProductInCart",
+  (quantity = 1, viewCart = false) => {
+    cy.searchforRandomProduct();
+    cy.verifyProductDetailsPage();
+    cy.get(productDetailsPage.quantity).clear().type(quantity);
+    cy.get(productDetailsPage.addToCart).click();
+    cy.get(productDetailsPage.name)
+      .invoke("text")
+      .then((productName) => {
+        cy.searchProductApi(productName);
+        cy.get("@responseBody").then((response) => {
+          let product = response.products[0];
+          updateCartArray(product, quantity);
+        });
+      });
+    viewCart
+      ? cy.get(cartModal.viewCart).click()
+      : cy.get(cartModal.continueShopping).click();
+    cy.log(cartArray);
+  }
+);
+
+function updateCartArray(product, quantity) {
+  product.quantity = quantity;
+  product.price = product.price.trim().replace(/^Rs\. /, ""); //trim currency
+  //in case product already exists
+  const existingProduct = cartArray.find((item) => item.id === product.id);
+  if (existingProduct) {
+    existingProduct.quantity += quantity;
+  } else {
+    cartArray.push({ ...product, quantity: quantity });
+  }
+}
+
+module.exports = cartArray;
