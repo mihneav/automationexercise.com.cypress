@@ -1,4 +1,4 @@
-import user from "./userCommands";
+const user = require("./userCommands");
 
 Cypress.Commands.add("createAccountApi", () => {
   cy.request({

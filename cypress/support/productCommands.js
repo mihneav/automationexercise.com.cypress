@@ -5,7 +5,7 @@ const {
   cartModal,
 } = require("../pageObjects/productDetailsPage");
 let cartArray = [];
-import "cypress-real-events/support";
+require("cypress-real-events/support");
 
 Cypress.Commands.add("verifyAllProductsPage", () => {
   cy.get(shopMenu.products)

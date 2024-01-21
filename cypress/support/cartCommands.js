@@ -1,9 +1,19 @@
-import { shopMenu } from "../pageObjects/shopPage";
-import cartArray from "./productCommands";
+const { shopMenu } = require("../pageObjects/shopPage");
+const cartArray = require("./productCommands");
 const cartPage = require("../pageObjects/cartPage");
 
-Cypress.Commands.add("verifyCartProducts", () => {
+Cypress.Commands.add("verifyCartProducts", (location) => {
   cy.get(shopMenu.cart).click();
+  verifyProducts();
+});
+
+Cypress.Commands.add("proceedToCheckout", () => {
+  cy.get(shopMenu.cart).click();
+  cy.get(cartPage.proceedToCheckout).click();
+});
+
+export function verifyProducts() {
+  cy.get(cartPage.productLines).should("have.length", cartArray.length);
   cy.wrap(cartArray).each((cartItem, index) => {
     cy.get(cartPage.productLine(index).description).should(
       "have.text",
@@ -22,4 +32,4 @@ Cypress.Commands.add("verifyCartProducts", () => {
       `Rs. ${cartArray[index].price * cartArray[index].quantity}`
     );
   });
-});
+}

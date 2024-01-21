@@ -12,6 +12,7 @@ const cartPage = {
     };
   },
   proceedToCheckout: `.col-sm-6 > .btn`,
+  totalPrice: `:nth-child(4) > .cart_total_price`,
 };
 
 module.exports = cartPage;

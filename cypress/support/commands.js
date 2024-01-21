@@ -2,8 +2,7 @@ const { shopMenu, shopPage } = require("../pageObjects/shopPage");
 const contactUsPage = require("../pageObjects/contactUsPage");
 const bacon = require("../utils/bacon");
 const testCasesPage = require("../pageObjects/testCasesPage");
-import { subscribeOn } from "rxjs";
-import user from "./userCommands";
+const user = require("./userCommands");
 
 Cypress.Commands.add("verifyHompageIsVisible", () => {
   cy.get(shopPage.footer).should("be.visible");

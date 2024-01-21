@@ -1,4 +1,5 @@
-import { faker } from "@faker-js/faker";
+const { faker } = require("@faker-js/faker");
+
 const randomDate = faker.date.between(
   new Date(new Date().setFullYear(new Date().getFullYear() - 65)),
   new Date(new Date().setFullYear(new Date().getFullYear() - 18))
@@ -33,7 +34,7 @@ class User {
   }
 
   get title() {
-    const title = this.sex === "male" ? "Mr." : "Mrs.";
+    const title = sex === "male" ? "Mr" : "Mrs";
     return title;
   }
 
@@ -45,9 +46,6 @@ class User {
     return faker.address.state(`${this._country}`);
   }
 
-  // Add other getters as needed
-
-  // Example method to generate the user object
   generateUser() {
     return {
       name: this.name,
@@ -70,4 +68,5 @@ class User {
     };
   }
 }
+
 module.exports = User;

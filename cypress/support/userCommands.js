@@ -1,9 +1,10 @@
-const { shopMenu, shopPage } = require("../pageObjects/shopPage");
+const { shopMenu } = require("../pageObjects/shopPage");
 const loginPage = require("../pageObjects/loginPage");
 const signUpPage = require("../pageObjects/signUpPage");
 const accountCreatedPage = require("../pageObjects/accountCreatedPage");
 const User = require("../utils/User");
 const accountDeletedPage = require("../pageObjects/accountDeletedPage");
+
 const userInstance = new User();
 const user = userInstance.generateUser();
 
