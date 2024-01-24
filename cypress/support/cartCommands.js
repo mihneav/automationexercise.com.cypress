@@ -1,10 +1,15 @@
 const { shopMenu } = require("../pageObjects/shopPage");
 const cartArray = require("./productCommands");
 const cartPage = require("../pageObjects/cartPage");
+const { generateRandomIndex } = require("./commands");
 
 Cypress.Commands.add("verifyCartProducts", (location) => {
   cy.get(shopMenu.cart).click();
-  verifyProducts();
+  cartArray.length === 0
+    ? cy
+        .get(cartPage.cartIsEmpty)
+        .should("have.text", "Cart is empty! Click here to buy products.")
+    : verifyProducts();
 });
 
 Cypress.Commands.add("proceedToCheckout", () => {
@@ -33,3 +38,17 @@ export function verifyProducts() {
     );
   });
 }
+
+Cypress.Commands.add("removeRandomCartProduct", () => {
+  if (cartArray.length > 1) {
+    cy.removeCartProduct(generateRandomIndex(cartArray));
+  } else {
+    cy.removeCartProduct(0);
+  }
+});
+
+Cypress.Commands.add("removeCartProduct", (index) => {
+  cy.get(shopMenu.cart).click();
+  cy.get(cartPage.productLine(index).deleteButton).click();
+  cartArray.splice(index, 1);
+});

@@ -6,6 +6,7 @@ const {
 } = require("../pageObjects/productDetailsPage");
 let cartArray = [];
 require("cypress-real-events/support");
+const { generateRandomIndex } = require("./commands");
 
 Cypress.Commands.add("verifyAllProductsPage", () => {
   cy.get(shopMenu.products)
@@ -33,8 +34,7 @@ Cypress.Commands.add("searchforRandomProduct", function () {
     .should("have.length.least", 2)
     .then(function (elements) {
       //select a random product name
-      const randomIndex = Math.floor(Math.random() * elements.length - 1);
-      cy.get(productsPage.productCard(randomIndex).name)
+      cy.get(productsPage.productCard(generateRandomIndex(elements)).name)
         .invoke("text")
         .as("productName")
         .then(function (productName) {
@@ -73,6 +73,10 @@ Cypress.Commands.add(
   (quantity = 1, viewCart = false) => {
     cy.searchforRandomProduct();
     cy.verifyProductDetailsPage();
+    cy.get(productDetailsPage.availability).should(
+      "have.text",
+      "Availability: In Stock"
+    );
     cy.get(productDetailsPage.quantity).clear().type(quantity);
     cy.get(productDetailsPage.addToCart).click();
     cy.get(productDetailsPage.name)
@@ -102,5 +106,55 @@ function updateCartArray(product, quantity) {
     cartArray.push({ ...product, quantity: quantity });
   }
 }
+
+Cypress.Commands.add("verifyCategoryVisible", (category) => {
+  cy.get(productsPage.categoryLinks(`${category}`).category).should(
+    "include.text",
+    category
+  );
+});
+
+Cypress.Commands.add("verifySubcategoryVisible", (category, subCategory) => {
+  cy.get(productsPage.categoryLinks(`${category}`).plus).click();
+  cy.get(
+    productsPage.categoryLinks(`${category}`).subCategory(`${subCategory}`)
+  ).should("include.text", subCategory);
+});
+
+Cypress.Commands.add("verifyCategoryTitle", (category, subCategory) => {
+  cy.get(productsPage.categoryLinks(`${category}`).plus).click();
+  cy.get(
+    productsPage.categoryLinks(`${category}`).subCategory(`${subCategory}`)
+  ).click();
+  cy.verifyProductsTitle(category, subcategory);
+});
+
+Cypress.Commands.add("verifyProductsTitle", (category, subCategory) => {
+  cy.get(productsPage.categoryTitle).should(
+    "have.text",
+    `${category} - ${subCategory} Products`
+  );
+});
+
+Cypress.Commands.add("verifyBrands", () => {
+  cy.get(shopMenu.products).click();
+  cy.getAllBrandsApi().then((response) => {
+    const uniqueBrands = [
+      ...new Set(response.brands.map((brand) => brand.brand)),
+    ];
+    cy.wrap(uniqueBrands).each((brand, index) => {
+      cy.get(productsPage.brand(index).lineIndex).should("include.text", brand);
+    });
+
+    function clickRandomBrand() {
+      const randomIndex = generateRandomIndex(uniqueBrands);
+      cy.get(productsPage.brand(randomIndex).lineIndex).click();
+      cy.verifyProductsTitle("Brand", uniqueBrands[randomIndex]);
+    }
+
+    clickRandomBrand();
+    clickRandomBrand();
+  });
+});
 
 module.exports = cartArray;

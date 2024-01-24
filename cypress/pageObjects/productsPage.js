@@ -15,6 +15,26 @@ const productsPage = {
       overlayAddToCart: `${selector} .product-overlay .btn.btn-default.add-to-cart`,
     };
   },
+  categoryLinks: function (label = "", subCategoryLabel) {
+    const selector = `.panel-default:contains(${label})`;
+    return {
+      category: selector,
+      plus: `${selector} .fa`,
+      subCategory: function (subCategoryLabel = "") {
+        const subSelector = `${this.category} .panel-body li:contains(${subCategoryLabel}) > a`;
+        return subSelector;
+      },
+    };
+  },
+  categoryTitle: ".title",
+  brand: function (identifier) {
+    const selector = `.brands-name`;
+    return {
+      lineLabel: `${selector} :contains(${identifier})`, //label
+      lineIndex: `${selector} li:nth(${identifier})`, //index
+    };
+  },
 };
 
 module.exports = productsPage;
+//.panel-body li:contains(Dress)

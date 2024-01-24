@@ -8,11 +8,12 @@ const cartPage = {
       price: `${selector} > .cart_price > p`,
       quantity: `${selector} .cart_quantity >`,
       total: `${selector} > .cart_total >`,
-      deleteButton: ` > .cart_delete >`,
+      deleteButton: `${selector} .cart_quantity_delete`,
     };
   },
   proceedToCheckout: `.col-sm-6 > .btn`,
   totalPrice: `:nth-child(4) > .cart_total_price`,
+  cartIsEmpty: `#empty_cart > .text-center`,
 };
 
 module.exports = cartPage;

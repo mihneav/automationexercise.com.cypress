@@ -42,3 +42,7 @@ Cypress.Commands.add("verifySubscription", () => {
     "You have been successfully subscribed!"
   );
 });
+
+export function generateRandomIndex(arr) {
+  return Math.floor(Math.random() * arr.length);
+}

@@ -56,3 +56,18 @@ Cypress.Commands.add("searchProductApi", (productName) => {
     cy.wrap(response.body).as("responseBody");
   });
 });
+
+Cypress.Commands.add("getAllBrandsApi", () => {
+  cy.request({
+    method: "GET",
+    url: "/api/brandsList",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    expect(response.status).to.equal(200);
+    response.body = JSON.parse(response.body);
+    cy.wrap(response.body).as("responseBody");
+  });
+});
