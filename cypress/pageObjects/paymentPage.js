@@ -9,6 +9,7 @@ const paymentPage = {
   orderPlacedMessage: `.col-sm-9 > p`,
   downloadInvoice: `.col-sm-9 > .btn-default`,
   continueButton: `[data-qa="continue-button"]`,
+  downloadInvoice: ".col-sm-9 > .btn-default",
 };
 
 module.exports = paymentPage;

@@ -1,4 +1,4 @@
-describe("Test Case 14: Place Order: Register while Checkout", () => {
+describe("Test Case 24: Download Invoice after purchase order", () => {
   it(`1. Launch browser
   2. Navigate to url 'http://automationexercise.com'
   3. Verify that home page is visible successfully
@@ -17,20 +17,22 @@ describe("Test Case 14: Place Order: Register while Checkout", () => {
   16. Enter payment details: Name on Card, Card Number, CVC, Expiration date
   17. Click 'Pay and Confirm Order' button
   18. Verify success message 'Your order has been placed successfully!'
-  19. Click 'Delete Account' button
-  20. Verify 'ACCOUNT DELETED!' and click 'Continue' button`, function () {
+  19. Click 'Download Invoice' button and verify invoice is downloaded successfully.
+  20. Click 'Continue' button
+  21. Click 'Delete Account' button
+  22. Verify 'ACCOUNT DELETED!' and click 'Continue' button`, function () {
     cy.visit("/");
-    cy.addRandomProductInCart(1);
-    cy.addRandomProductInCart(2, true);
-    cy.addRandomProductInCart(3, true);
+    cy.addRandomProductInCart(2);
+    cy.addRandomProductInCart(1, true);
     cy.verifyCartProducts();
-    cy.createAccount();
     cy.proceedToCheckout();
-    cy.verifyCheckoutProducts();
-    cy.verifyAddresses();
+    cy.createAccount();
+    cy.verifyUserIsLogged();
+    cy.proceedToCheckout();
     cy.enterDescription();
     cy.placeOrder();
     cy.enterPaymentDetails();
+    cy.verifyDownloadInvoice();
     cy.verifyOrderPlaced();
     cy.deleteAccount();
   });

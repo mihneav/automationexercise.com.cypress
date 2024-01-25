@@ -7,6 +7,9 @@ const {
 let cartArray = [];
 require("cypress-real-events/support");
 const { generateRandomIndex } = require("./commands");
+const user = require("./userCommands");
+const bacon = require("../utils/bacon");
+const { generate } = require("rxjs");
 
 Cypress.Commands.add("verifyAllProductsPage", () => {
   cy.get(shopMenu.products)
@@ -21,7 +24,10 @@ Cypress.Commands.add("verifyAllProductsPage", () => {
 Cypress.Commands.add("verifyProductDetailsPage", (productIndex = 0, name) => {
   cy.get(productsPage.productCard(productIndex).viewProduct).click();
   for (const selector in productDetailsPage) {
-    cy.get(productDetailsPage[selector]).should("be.visible");
+    cy.log(selector);
+    if (selector != "reviewSuccess") {
+      cy.get(productDetailsPage[selector]).should("be.visible");
+    }
   }
   if (name) {
     cy.get(productDetailsPage.name).should("have.text", name);
@@ -157,4 +163,56 @@ Cypress.Commands.add("verifyBrands", () => {
   });
 });
 
+Cypress.Commands.add("addSearchProductsInCart", function (searchString) {
+  cy.get(shopMenu.products).click();
+  cy.get(productsPage.search).type(searchString);
+  cy.get(productsPage.submitSearch).click();
+  cy.get(productsPage.title).should("have.text", "Searched Products");
+  cy.get(productsPage.productCards).each((element, index) => {
+    cy.get(productsPage.productCard(index).name).should(
+      "include.text",
+      searchString
+    );
+    cy.addProductInCart(index);
+  });
+});
+
+Cypress.Commands.add("writeProductReview", function (searchString) {
+  cy.searchforRandomProduct();
+  cy.verifyProductDetailsPage();
+  cy.get(productDetailsPage.reviewName).type(user.name);
+  cy.get(productDetailsPage.reviewEmail).type(user.email);
+  cy.get(productDetailsPage.reviewMessage).type(bacon);
+  cy.get(productDetailsPage.reviewButton).click();
+  cy.get(productDetailsPage.reviewSuccess).should(
+    "include.text",
+    "Thank you for your review."
+  );
+});
+
+Cypress.Commands.add("addRandomRecomendedProductToCart", function () {
+  cy.get(shopPage.recommendedProductsTitle).should(
+    "have.text",
+    "recommended items"
+  );
+  cy.get(shopPage.recommendedLeftArrow).click({ waitForAnimations: true });
+  cy.get(shopPage.recommendedRightArrow).click({ waitForAnimations: true });
+  cy.get(shopPage.carouselActiveCards).then((elements) => {
+    const index = generateRandomIndex(elements);
+    cy.get(shopPage.recommendedProductCard(index))
+      .click()
+      .then(() => {
+        cy.get(shopPage.recommendedProductName(index))
+          .invoke("text")
+          .then((productName) => {
+            cy.searchProductApi(productName);
+            cy.get("@responseBody").then((response) => {
+              let product = response.products[0];
+              updateCartArray(product, 1);
+            });
+          });
+      });
+    cy.get(cartModal.continueShopping).click();
+  });
+});
 module.exports = cartArray;

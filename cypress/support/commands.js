@@ -1,8 +1,10 @@
+import { cardNumber } from "../utils/payment";
+
 const { shopMenu, shopPage } = require("../pageObjects/shopPage");
 const contactUsPage = require("../pageObjects/contactUsPage");
 const bacon = require("../utils/bacon");
 const testCasesPage = require("../pageObjects/testCasesPage");
-const user = require("./userCommands");
+const fs = require("fs");
 
 Cypress.Commands.add("verifyHompageIsVisible", () => {
   cy.get(shopPage.footer).should("be.visible");
@@ -41,6 +43,58 @@ Cypress.Commands.add("verifySubscription", () => {
     "have.text",
     "You have been successfully subscribed!"
   );
+});
+
+Cypress.Commands.add("verifyScrollBottomArrow", () => {
+  cy.isNotInViewport(shopPage.subscriptionText);
+  cy.scrollTo("bottom");
+  cy.isInViewport(shopPage.subscriptionText);
+  // cy.get(shopPage.subscriptionText, { scrollBehavior: false }).should(
+  //   "be.visible"
+  // );
+  cy.get(shopPage.upArrow).click();
+  cy.isInViewport(shopPage.sliderText);
+  cy.get(shopPage.sliderText, { scrollBehavior: false }).should(
+    "have.text",
+    "Full-Fledged practice website for Automation Engineers"
+  );
+});
+
+Cypress.Commands.add("verifyScrollBottomNoArrow", () => {
+  cy.isNotInViewport(shopPage.subscriptionText);
+  cy.scrollTo("bottom");
+  cy.isInViewport(shopPage.subscriptionText);
+
+  cy.scrollTo("top");
+  cy.isInViewport(shopPage.sliderText);
+  cy.get(shopPage.sliderText, { scrollBehavior: false }).should(
+    "have.text",
+    "Full-Fledged practice website for Automation Engineers"
+  );
+});
+
+Cypress.Commands.add("isInViewport", (element) => {
+  cy.get(element).then(($el) => {
+    const bottom = Cypress.$(cy.state("window")).height();
+    const rect = $el[0].getBoundingClientRect();
+
+    expect(rect.top).not.to.be.greaterThan(bottom);
+    expect(rect.bottom).not.to.be.greaterThan(bottom);
+    expect(rect.top).not.to.be.greaterThan(bottom);
+    expect(rect.bottom).not.to.be.greaterThan(bottom);
+  });
+});
+
+Cypress.Commands.add("isNotInViewport", (element) => {
+  cy.get(element).then(($el) => {
+    const bottom = Cypress.$(cy.state("window")).height();
+    const rect = $el[0].getBoundingClientRect();
+
+    expect(rect.top).to.be.greaterThan(bottom);
+    expect(rect.bottom).to.be.greaterThan(bottom);
+    expect(rect.top).to.be.greaterThan(bottom);
+    expect(rect.bottom).to.be.greaterThan(bottom);
+  });
 });
 
 export function generateRandomIndex(arr) {

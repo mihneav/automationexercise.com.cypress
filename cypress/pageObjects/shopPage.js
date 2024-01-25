@@ -17,6 +17,18 @@ const shopPage = {
   subscribeEmail: "#susbscribe_email",
   subscribeButton: "#subscribe",
   subscribeMessage: ".alert-success",
+  recommendedLeftArrow: "#recommended-item-carousel > .left > .fa",
+  recommendedRightArrow: "#recommended-item-carousel > .left > .fa",
+  recommendedProductsTitle: ".recommended_items > .title",
+  carouselActiveCards: ".active .single-products > .productinfo",
+  recommendedProductCard: function (index) {
+    return `${this.carouselActiveCards}:nth(${index}) > .btn`;
+  },
+  recommendedProductName: function (index) {
+    return `${this.carouselActiveCards}:nth(${index}) > p`;
+  },
+  upArrow: "#scrollUp",
+  sliderText: ".active > :nth-child(1) > h2",
 };
 
 module.exports = { shopMenu, shopPage };

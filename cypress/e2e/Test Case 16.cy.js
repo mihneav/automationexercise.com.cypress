@@ -25,7 +25,7 @@ describe("Test Case 16: Place Order: Login before Checkout", () => {
     cy.verifyCartProducts();
     cy.proceedToCheckout();
     cy.verifyCheckoutProducts();
-    cy.verifyAddress();
+    cy.verifyAddresses();
     cy.enterDescription();
     cy.placeOrder();
     cy.enterPaymentDetails();

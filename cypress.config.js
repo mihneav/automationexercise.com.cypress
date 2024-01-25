@@ -5,6 +5,5 @@ module.exports = defineConfig({
     baseUrl: "https://www.automationexercise.com/",
     viewportHeight: 1080,
     viewportWidth: 1920,
-    experimentalRunAllSpecs: true,
   },
 });

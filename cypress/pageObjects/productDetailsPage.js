@@ -11,6 +11,7 @@ const productDetailsPage = {
   reviewEmail: `#email`,
   reviewMessage: `#review`,
   reviewButton: `#button-review`,
+  reviewSuccess: ".col-md-12 > .alert-success",
 };
 
 const cartModal = {

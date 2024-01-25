@@ -37,4 +37,3 @@ const productsPage = {
 };
 
 module.exports = productsPage;
-//.panel-body li:contains(Dress)
