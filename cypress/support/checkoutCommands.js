@@ -18,7 +18,6 @@ export function calculateTotal() {
 }
 
 Cypress.Commands.add("verifyAddresses", () => {
-  const addresses = ["addressDelivery", "addressBilling"];
   ["addressDelivery", "addressInvoice"].forEach((addressType) => {
     const address = checkoutPage[addressType];
     cy.get(address.name).should("have.text", `${user.title}. ${user.name}`);

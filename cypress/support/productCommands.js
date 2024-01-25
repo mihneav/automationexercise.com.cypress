@@ -68,8 +68,6 @@ Cypress.Commands.add(
     viewCart
       ? cy.get(cartModal.viewCart).click()
       : cy.get(cartModal.continueShopping).click();
-
-    cy.log(cartArray);
   }
 );
 
@@ -96,7 +94,6 @@ Cypress.Commands.add(
     viewCart
       ? cy.get(cartModal.viewCart).click()
       : cy.get(cartModal.continueShopping).click();
-    cy.log(cartArray);
   }
 );
 
