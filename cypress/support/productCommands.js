@@ -24,7 +24,6 @@ Cypress.Commands.add("verifyAllProductsPage", () => {
 Cypress.Commands.add("verifyProductDetailsPage", (productIndex = 0, name) => {
   cy.get(productsPage.productCard(productIndex).viewProduct).click();
   for (const selector in productDetailsPage) {
-    cy.log(selector);
     if (selector != "reviewSuccess") {
       cy.get(productDetailsPage[selector]).should("be.visible");
     }

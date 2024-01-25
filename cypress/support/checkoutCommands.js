@@ -36,23 +36,6 @@ Cypress.Commands.add("verifyAddresses", () => {
     cy.get(address.country).should("have.text", `${user.country}`);
     cy.get(address.mobile_number).should("have.text", `${user.mobile_number}`);
   });
-  // cy.get(checkoutPage.name).should("have.text", `${user.title}. ${user.name}`);
-  // cy.get(checkoutPage.company).should("have.text", `${user.company}`);
-  // cy.get(checkoutPage.address1).should("have.text", `${user.address1}`);
-  // cy.get(checkoutPage.address2).should("have.text", `${user.address2}`);
-  // cy.get(checkoutPage.city)
-  //   .invoke("text")
-  //   .then((text) => {
-  //     const cleanedText = text.trim().replace(/\s+/g, " "); // remove \n\t\t\t\t\t\t\t\t
-  //     cy.expect(cleanedText).to.include(`${user.city}`);
-  //     cy.expect(cleanedText).to.include(`${user.state}`);
-  //     cy.expect(cleanedText).to.include(`${user.zipcode}`);
-  //   });
-  // cy.get(checkoutPage.country).should("have.text", `${user.country}`);
-  // cy.get(checkoutPage.mobile_number).should(
-  //   "have.text",
-  //   `${user.mobile_number}`
-  // );
 });
 
 Cypress.Commands.add("enterDescription", () => {
