@@ -1,4 +1,7 @@
 describe("Test Case 12: Add Products in Cart", () => {
+  before(() => {
+    cy.cleanUp();
+  });
   it(`1. Launch browser
   2. Navigate to url 'http://automationexercise.com'
   3. Verify that home page is visible successfully

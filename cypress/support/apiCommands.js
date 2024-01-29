@@ -1,40 +1,42 @@
-const user = require("./userCommands");
-
 Cypress.Commands.add("createAccountApi", () => {
-  cy.request({
-    method: "POST",
-    url: "/api/createAccount",
-    form: true,
-    body: user,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((response) => {
-    expect(response.status).to.equal(200);
-    response.body = JSON.parse(response.body);
-    expect(response.body).to.have.property("responseCode", 201);
-    expect(response.body).to.have.property("message", "User created!");
+  cy.get("@user").then((user) => {
+    cy.request({
+      method: "POST",
+      url: "/api/createAccount",
+      form: true,
+      body: user,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      response.body = JSON.parse(response.body);
+      expect(response.body).to.have.property("responseCode", 201);
+      expect(response.body).to.have.property("message", "User created!");
+    });
   });
 });
 
 Cypress.Commands.add("deleteAccountApi", () => {
-  const payload = {
-    email: user.email,
-    password: user.password,
-  };
-  cy.request({
-    method: "DELETE",
-    url: "/api/deleteAccount",
-    form: true,
-    body: payload,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((response) => {
-    expect(response.status).to.equal(200);
-    response.body = JSON.parse(response.body);
-    expect(response.body).to.have.property("responseCode", 200);
-    expect(response.body).to.have.property("message", "Account deleted!");
+  cy.get("@user").then((user) => {
+    const payload = {
+      email: user.email,
+      password: user.password,
+    };
+    cy.request({
+      method: "DELETE",
+      url: "/api/deleteAccount",
+      form: true,
+      body: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      response.body = JSON.parse(response.body);
+      expect(response.body).to.have.property("responseCode", 200);
+      expect(response.body).to.have.property("message", "Account deleted!");
+    });
   });
 });
 

@@ -1,5 +1,7 @@
 describe("Test Case 2: Login User with correct email and password", () => {
   before(() => {
+    cy.cleanUp();
+    cy.generateUser().as("user");
     cy.createAccountApi();
   });
   it(`1. Launch browser

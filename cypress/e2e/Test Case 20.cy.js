@@ -1,4 +1,8 @@
 describe("Test Case 19: View & Cart Brand Products", () => {
+  before(() => {
+    cy.cleanUp();
+    cy.generateUser().as("user");
+  });
   it(`1. Launch browser
   2. Navigate to url 'http://automationexercise.com'
   3. Click on 'Products' button

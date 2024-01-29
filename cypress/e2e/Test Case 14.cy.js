@@ -1,4 +1,8 @@
 describe("Test Case 14: Place Order: Register while Checkout", () => {
+  before(() => {
+    cy.cleanUp();
+    cy.generateUser().as("user");
+  });
   it(`1. Launch browser
   2. Navigate to url 'http://automationexercise.com'
   3. Verify that home page is visible successfully

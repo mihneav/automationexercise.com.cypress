@@ -7,9 +7,7 @@ const {
 let cartArray = [];
 require("cypress-real-events/support");
 const { generateRandomIndex } = require("./commands");
-const user = require("./userCommands");
 const bacon = require("../utils/bacon");
-const { generate } = require("rxjs");
 
 Cypress.Commands.add("verifyAllProductsPage", () => {
   cy.get(shopMenu.products)
@@ -128,7 +126,7 @@ Cypress.Commands.add("verifyCategoryTitle", (category, subCategory) => {
   cy.get(
     productsPage.categoryLinks(`${category}`).subCategory(`${subCategory}`)
   ).click();
-  cy.verifyProductsTitle(category, subcategory);
+  cy.verifyProductsTitle(category, subCategory);
 });
 
 Cypress.Commands.add("verifyProductsTitle", (category, subCategory) => {
@@ -176,14 +174,16 @@ Cypress.Commands.add("addSearchProductsInCart", function (searchString) {
 Cypress.Commands.add("writeProductReview", function (searchString) {
   cy.searchforRandomProduct();
   cy.verifyProductDetailsPage();
-  cy.get(productDetailsPage.reviewName).type(user.name);
-  cy.get(productDetailsPage.reviewEmail).type(user.email);
-  cy.get(productDetailsPage.reviewMessage).type(bacon);
-  cy.get(productDetailsPage.reviewButton).click();
-  cy.get(productDetailsPage.reviewSuccess).should(
-    "include.text",
-    "Thank you for your review."
-  );
+  cy.get("@user").then((user) => {
+    cy.get(productDetailsPage.reviewName).type(user.name);
+    cy.get(productDetailsPage.reviewEmail).type(user.email);
+    cy.get(productDetailsPage.reviewMessage).type(bacon);
+    cy.get(productDetailsPage.reviewButton).click();
+    cy.get(productDetailsPage.reviewSuccess).should(
+      "include.text",
+      "Thank you for your review."
+    );
+  });
 });
 
 Cypress.Commands.add("addRandomRecomendedProductToCart", function () {

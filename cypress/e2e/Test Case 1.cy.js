@@ -1,4 +1,10 @@
+// const { generateUser } = require("../support/userCommands");
 describe("Test Case 1: Register User", () => {
+  before(() => {
+    cy.cleanUp();
+    cy.generateUser().as("user");
+  });
+
   it(`1. Launch browser
   2. Navigate to url 'http://automationexercise.com'
   3. Verify that home page is visible successfully
@@ -18,6 +24,7 @@ describe("Test Case 1: Register User", () => {
   17. Click 'Delete Account' button
   18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button`, () => {
     cy.visit("");
+
     cy.verifyHompageIsVisible();
     cy.initiateSignUp();
     cy.enterAccountInformation();

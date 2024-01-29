@@ -1,7 +1,8 @@
 {
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
-    "cypress": "^13.6.2"
+    "cypress": "^13.6.2",
+    "cypress-mochawesome-reporter": "^3.8.1"
   },
   "name": "httpsdemos.bellatrix.solutions",
   "version": "1.0.0",
@@ -48,6 +49,7 @@
     "concat-map": "^0.0.1",
     "core-util-is": "^1.0.2",
     "cross-spawn": "^7.0.3",
+    "cypress-parallel": "^0.14.0",
     "cypress-real-events": "^1.11.0",
     "dashdash": "^1.14.1",
     "dayjs": "^1.11.10",
@@ -180,7 +182,8 @@
     "yauzl": "^2.10.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:run": "cypress run",
+    "cy:parallel" : "cypress-parallel -s cy:run -t 2 -d cypress/e2e -a"
   },
   "author": "",
   "license": "ISC",

@@ -1,4 +1,7 @@
 describe("Test Case 22: Add to cart from Recommended items", () => {
+  before(() => {
+    cy.cleanUp();
+  });
   it(`1. Launch browser
   2. Navigate to url 'http://automationexercise.com'
   3. Scroll to bottom of page

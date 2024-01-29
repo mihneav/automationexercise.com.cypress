@@ -6,24 +6,32 @@ const bacon = require("../utils/bacon");
 const testCasesPage = require("../pageObjects/testCasesPage");
 const fs = require("fs");
 
+Cypress.Commands.add("cleanUp", () => {
+  cy.clearAllCookies();
+  cy.clearAllLocalStorage();
+  cy.clearAllSessionStorage();
+});
+
 Cypress.Commands.add("verifyHompageIsVisible", () => {
   cy.get(shopPage.footer).should("be.visible");
   cy.get(shopPage.featuredItems).should("be.visible");
 });
 
 Cypress.Commands.add("fillContactUsForm", () => {
-  cy.get(shopMenu.contactUs).click();
-  cy.get(contactUsPage.name).type(user.name);
-  cy.get(contactUsPage.email).type(user.email);
-  cy.get(contactUsPage.subject).type("Bacon");
-  cy.get(contactUsPage.message).type(bacon);
-  cy.get(contactUsPage.fileSubmit).selectFile("cypress/utils/bacon.jpg");
-  cy.get(contactUsPage.submitButton).click();
-  cy.get(contactUsPage.succeesMessage).should(
-    "include.text",
-    "Success! Your details have been submitted successfully."
-  );
-  cy.get(shopMenu.home).click();
+  cy.get("@user").then((user) => {
+    cy.get(shopMenu.contactUs).click();
+    cy.get(contactUsPage.name).type(user.name);
+    cy.get(contactUsPage.email).type(user.email);
+    cy.get(contactUsPage.subject).type("Bacon");
+    cy.get(contactUsPage.message).type(bacon);
+    cy.get(contactUsPage.fileSubmit).selectFile("cypress/utils/bacon.jpg");
+    cy.get(contactUsPage.submitButton).click();
+    cy.get(contactUsPage.succeesMessage).should(
+      "include.text",
+      "Success! Your details have been submitted successfully."
+    );
+    cy.get(shopMenu.home).click();
+  });
 });
 
 Cypress.Commands.add("verifyTestCasesPage", () => {
@@ -36,13 +44,15 @@ Cypress.Commands.add("verifyTestCasesPage", () => {
 });
 
 Cypress.Commands.add("verifySubscription", () => {
-  cy.get(shopPage.subscriptionText).should("be.visible");
-  cy.get(shopPage.subscribeEmail).type(user.email);
-  cy.get(shopPage.subscribeButton).click();
-  cy.get(shopPage.subscribeMessage).should(
-    "have.text",
-    "You have been successfully subscribed!"
-  );
+  cy.get("@user").then((user) => {
+    cy.get(shopPage.subscriptionText).should("be.visible");
+    cy.get(shopPage.subscribeEmail).type(user.email);
+    cy.get(shopPage.subscribeButton).click();
+    cy.get(shopPage.subscribeMessage).should(
+      "have.text",
+      "You have been successfully subscribed!"
+    );
+  });
 });
 
 Cypress.Commands.add("verifyScrollBottomArrow", () => {
@@ -73,6 +83,7 @@ Cypress.Commands.add("verifyScrollBottomNoArrow", () => {
   );
 });
 
+// from https://github.com/cypress-io/cypress/issues/877#issuecomment-490504922
 Cypress.Commands.add("isInViewport", (element) => {
   cy.get(element).then(($el) => {
     const bottom = Cypress.$(cy.state("window")).height();
@@ -85,6 +96,7 @@ Cypress.Commands.add("isInViewport", (element) => {
   });
 });
 
+// from https://github.com/cypress-io/cypress/issues/877#issuecomment-490504922
 Cypress.Commands.add("isNotInViewport", (element) => {
   cy.get(element).then(($el) => {
     const bottom = Cypress.$(cy.state("window")).height();

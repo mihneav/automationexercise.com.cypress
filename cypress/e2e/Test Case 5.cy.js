@@ -1,5 +1,7 @@
 describe("Test Case 5: Register User with existing email", () => {
   before(() => {
+    cy.cleanUp();
+    cy.generateUser().as("user");
     cy.createAccountApi();
   });
   it(`1. Launch browser
