@@ -13,12 +13,12 @@ Ensure you have the following software installed on your machine:
 ```
 npm install
 ```
-# Run:
+## Run:
 ```
 npx cypress run
 ```
 
-# Run in parallel:
+## Run in parallel:
 ```
 npm run cy:parallel
 ```
